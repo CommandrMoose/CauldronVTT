@@ -1,0 +1,169 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.ModelGaiaGoblin",
+				"texture_width": 128,
+				"texture_height": 64,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "body",
+					"pivot": [0, 8, 0],
+					"cubes": [
+						{"origin": [-4, 8, -2], "size": [8, 8, 4], "uv": [0, 16]}
+					]
+				},
+				{
+					"name": "backpack",
+					"parent": "body",
+					"pivot": [0, 12, 2],
+					"cubes": [
+						{"origin": [-4, 8, 2], "size": [8, 8, 3], "uv": [69, 35]}
+					]
+				},
+				{
+					"name": "rightarm",
+					"parent": "body",
+					"pivot": [-4, 14, 0],
+					"cubes": [
+						{"origin": [-7, 7.5, -1.5], "size": [3, 8, 3], "uv": [24, 16]}
+					]
+				},
+				{
+					"name": "rightarmgauntlet",
+					"parent": "rightarm",
+					"pivot": [-4, 14, 0],
+					"cubes": [
+						{"origin": [-7.5, 7, -2], "size": [4, 4, 4], "uv": [100, 8]}
+					]
+				},
+				{
+					"name": "leftarm",
+					"parent": "body",
+					"pivot": [4, 14, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [4, 7.5, -1.5], "size": [3, 8, 3], "uv": [24, 16]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "body",
+					"pivot": [0, 16, 0],
+					"cubes": [
+						{"origin": [-4, 16, -4], "size": [8, 8, 8], "uv": [0, 0]},
+						{"origin": [-2, 22, 3], "size": [4, 4, 4], "pivot": [0, 22, 5], "rotation": [42.5, 0, 0], "uv": [24, 0]}
+					]
+				},
+				{
+					"name": "headaccessory",
+					"parent": "head",
+					"pivot": [0, 16, 0],
+					"cubes": [
+						{"origin": [-4.5, 15.5, -4.5], "size": [9, 9, 9], "uv": [64, 0]}
+					]
+				},
+				{
+					"name": "rightear",
+					"parent": "head",
+					"pivot": [0, 16, 2],
+					"rotation": [0, -45, 0],
+					"cubes": [
+						{"origin": [-5.5, 17, 2], "size": [0, 6, 8], "uv": [64, 10]}
+					]
+				},
+				{
+					"name": "leftear",
+					"parent": "head",
+					"pivot": [0, 16, 2],
+					"rotation": [0, 45, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [5.5, 17, 2], "size": [0, 6, 8], "uv": [64, 10]}
+					]
+				},
+				{
+					"name": "rightearback",
+					"parent": "head",
+					"pivot": [0, 16, 2],
+					"rotation": [0, -45, 0],
+					"cubes": [
+						{"origin": [-5.4, 17, 2], "size": [0, 6, 8], "uv": [80, 10]}
+					]
+				},
+				{
+					"name": "leftearback",
+					"parent": "head",
+					"pivot": [0, 16, 2],
+					"rotation": [0, 45, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [5.4, 17, 2], "size": [0, 6, 8], "uv": [80, 10]}
+					]
+				},
+				{
+					"name": "headnose",
+					"parent": "head",
+					"pivot": [0, 16, 0]
+				},
+				{
+					"name": "leftarmgauntlet",
+					"pivot": [4, 14, 0],
+					"mirror": true
+				},
+				{
+					"name": "rightlegupper",
+					"pivot": [-2, 8, 0]
+				},
+				{
+					"name": "leftlegupper",
+					"pivot": [2, 8, 0],
+					"mirror": true
+				},
+				{
+					"name": "rightlegboot",
+					"pivot": [-2, 8, 0],
+					"cubes": [
+						{"origin": [-4, 0, -2], "size": [4, 4, 4], "uv": [100, 24]}
+					]
+				},
+				{
+					"name": "leftlegboot",
+					"pivot": [2, 8, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [0, 0, -2], "size": [4, 4, 4], "uv": [100, 24]}
+					]
+				},
+				{
+					"name": "getRightArm",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "getLeftArm",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "rightleg",
+					"pivot": [-2, 8, 0],
+					"cubes": [
+						{"origin": [-3.5, 0, -1.5], "size": [3, 8, 3], "uv": [36, 16]}
+					]
+				},
+				{
+					"name": "leftleg",
+					"pivot": [2, 8, 0],
+					"mirror": true,
+					"cubes": [
+						{"origin": [0.5, 0, -1.5], "size": [3, 8, 3], "uv": [36, 16]}
+					]
+				}
+			]
+		}
+	]
+}

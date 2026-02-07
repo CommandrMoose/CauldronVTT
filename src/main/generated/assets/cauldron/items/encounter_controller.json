@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "cauldron:block/encounter_controller"
+  }
+}

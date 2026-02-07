@@ -1,0 +1,16 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "misc.living": {
+      "loop": true,
+      "animation_length": 2.7,
+      "bones": {}
+    },
+    "move.walk": {
+      "loop": true,
+      "animation_length": 2,
+      "bones": {}
+    }
+  },
+  "geckolib_format_version": 2
+}

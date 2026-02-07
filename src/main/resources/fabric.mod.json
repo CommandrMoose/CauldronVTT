@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "cauldron",
+  "version": "${version}",
+  "name": "Cauldron",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "LGPL-3.0",
+  "icon": "assets/cauldron/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "org.river.cauldron.client.CauldronDataGenerator"
+    ],
+    "client": [
+      "org.river.cauldron.client.CauldronClient"
+    ],
+    "main": [
+      "org.river.cauldron.Cauldron"
+    ],
+    "cardinal-components": [
+      "org.river.cauldron.registry.CauldronEntityComponents",
+      "org.river.cauldron.registry.CauldronWorldComponent"
+    ]
+  },
+  "mixins": [
+    "cauldron.mixins.json",
+    {
+      "config": "cauldron.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*",
+    "fabric-key-binding-api-v1": "*"
+  },
+  "custom": {
+    "cardinal-components": [
+      "cauldron:player",
+      "cauldron:world"
+    ]
+  }
+}

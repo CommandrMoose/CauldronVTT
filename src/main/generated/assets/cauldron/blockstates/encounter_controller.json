@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "cauldron:block/encounter_controller"
+    }
+  }
+}

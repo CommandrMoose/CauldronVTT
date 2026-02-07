@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "cauldron:item/character_spawner_item"
+  }
+}
