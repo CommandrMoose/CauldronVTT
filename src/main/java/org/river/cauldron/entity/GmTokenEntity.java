@@ -76,10 +76,18 @@ public class GmTokenEntity extends CharacterTokenEntity {
 
             if (sp.getMainHandStack().getItem() instanceof GmTokenSpawnerItem || sp.getOffHandStack().getItem() instanceof GmTokenSpawnerItem) {
                 CauldronWorldDataComponent comp = CauldronWorldComponent.WORLD.getNullable(this.getEntityWorld());
-                if (comp instanceof CauldronWorldDataComponent) {
-                    comp.getEncounterDataManager().removeGmTokenFromEncounter(this.getEncounterId(), this.getTokenId());
-                    sp.sendMessage(Text.literal("Removed from the encounter data."), true);
-                    setPos(0, -10000, 0);
+                CauldronPlayerComponent playerComponent = player.getComponent(CauldronEntityComponents.PLAYER);
+                if (comp instanceof CauldronWorldDataComponent && playerComponent instanceof CauldronPlayerComponent) {
+
+                    if (playerComponent.getEncounterModifierId().equals(this.encounterId)) {
+                        comp.getEncounterDataManager().removeGmTokenFromEncounter(this.getEncounterId(), this.getTokenId());
+                        sp.sendMessage(Text.literal("Removed from the encounter data."), true);
+                        setPos(0, -10000, 0);
+                    } else {
+                        sp.sendMessage(Text.literal("This token is not registered to this encounter."), true);
+                    }
+
+
                 }
             }
         }

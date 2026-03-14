@@ -76,7 +76,7 @@ public class CauldronCommands implements ModInitializer {
                                     .then(argument("displayName", StringArgumentType.string())
                                             .requires(source -> source.getPermissions().hasPermission(DefaultPermissions.MODERATORS))
                                             .executes(commandContext -> {
-                                                        final String displayName = StringArgumentType.getString(commandContext, "displayName");
+                                                        var displayName = StringArgumentType.getString(commandContext, "displayName");
                                                         return CauldronEncounterCommand.createEncounter(commandContext, displayName);
                                                     }
                                             )

@@ -8,8 +8,10 @@ import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;
-import net.minecraft.text.Text;
+import net.minecraft.text.*;
+import net.minecraft.util.Colors;
 import net.minecraft.world.World;
+import net.minecraft.world.attribute.ColorModifier;
 import org.river.cauldron.data.CauldronEncounterData;
 import org.river.cauldron.entity.GmTokenEntity;
 import org.river.cauldron.network.c2s.SetGmTokenCharacterC2SPayload;
@@ -33,7 +35,7 @@ public class EncounterDataManager {
     }
 
     public EncounterDataManager(List<CauldronEncounterData> encounterData) {
-        this.encounterDataList = encounterData;
+        this.encounterDataList = encounterData.stream().toList();
     }
 
     public List<CauldronEncounterData> getEncounterDataList() {
@@ -43,7 +45,10 @@ public class EncounterDataManager {
 
     public void listEncounters(PlayerEntity player) {
         encounterDataList.forEach(x -> {
-            player.sendMessage(Text.literal(x.ID + " - " + x.displayName), false);
+            player.sendMessage(Text.literal(x.displayName)
+                    .setStyle(Style.EMPTY.withHoverEvent(new HoverEvent.ShowText(Text.literal(x.ID.toString()))))
+                    .append(" ")
+                    .append(Text.literal("[Modify]").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(Colors.CYAN)).withClickEvent(new ClickEvent.SuggestCommand("/cauldron encounter modify " + x.displayName)))), false);
         });
     }
 
@@ -59,26 +64,26 @@ public class EncounterDataManager {
     }
 
     public boolean createEncounter(String name) {
-        // Look to see if character could be created
-        var characterExists = doesEncounterExistWithName(name);
+        // Look to see if encounter could be created
+        var encounterExists = doesEncounterExistWithName(name);
 
-        if (characterExists) {
+        if (encounterExists) {
             return false;
         }
 
-        encounterDataList.add(new CauldronEncounterData(name));
-        System.out.println("Created new character");
+        var newEncounter = new CauldronEncounterData(name);
+        var newList = new ArrayList<>(encounterDataList.stream().toList());
+        newList.add(newEncounter);
+        this.encounterDataList = newList;
+
         return true;
     }
-
 
     public boolean doesEncounterExist(String id) {
         return encounterDataList.stream().anyMatch((x) -> {
             return Objects.equals(x.ID.toString(), id);
         });
     }
-
-
 
     public Optional<CauldronEncounterData> getEncounterByDisplayName(String displayName) {
 
@@ -125,8 +130,9 @@ public class EncounterDataManager {
                     encounterData.recordedGmTokenEntities = new ArrayList<>();
                 }
 
-
-                encounterData.recordedGmTokenEntities.add(entity.getUuidAsString());
+                var recorded = new ArrayList<>(encounterData.recordedGmTokenEntities.stream().toList());
+                recorded.add(entity.getUuidAsString());
+                encounterData.recordedGmTokenEntities = recorded;
 
                 var modifiedData = new ArrayList<>(encounterData.gmTokenData.stream().filter(x -> !x.tokenId.equals(entity.getTokenId())).toList());
                 modifiedData.add(tokenData);
@@ -149,7 +155,7 @@ public class EncounterDataManager {
 
         Optional<EncounterDataManager> data = readView.read("encounters", CODEC);
         data.ifPresent((x) -> {
-            this.encounterDataList = x.encounterDataList;
+            this.encounterDataList = x.encounterDataList.stream().toList();
         });
     }
 

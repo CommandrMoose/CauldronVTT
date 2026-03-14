@@ -71,7 +71,7 @@ public class EncounterManager {
                 entity.setPosition(entity.getX(), -10000, entity.getZ());
             }
         });
-        CauldronCurrentEncounter.initiative.INIT_PLACEMENTS.clear();
+        CauldronCurrentEncounter.initiative.INIT_PLACEMENTS = new ArrayList<>();
         CauldronCurrentEncounter.initiative.setEncounterStarted(false);
         CauldronCurrentEncounter.initiative.setHasEncounterInit(false);
         CauldronCurrentEncounter.initiative.setCurrentToken(0);
@@ -86,20 +86,16 @@ public class EncounterManager {
                 tokenEntity.setPosition(new Vec3d(0, -10000, 0));
             }
         });
+        ;
 
-        System.out.println(currentEncounter.gmTokenData.stream().count());
-
+        currentEncounter.recordedGmTokenEntities = new ArrayList<>();
 
         // Respawn these entities as if they were always there.
         currentEncounter.gmTokenData.forEach(x -> {
 
-            var respawnedToken = new GmTokenEntity(CauldronEntities.GM_TOKEN, world);
-
-            System.out.println(x.characterId);
+            var respawnedToken = new GmTokenEntity(CauldronEntities.GM_TOKEN, world);;
 
             var characterData = CauldronCharacters.SERVER_CHARACTER_DATA.stream().filter(y -> Objects.equals(x.characterId, y.id)).findFirst();
-
-
 
 
             characterData.ifPresentOrElse(cauldronCharacterData -> {
@@ -135,34 +131,30 @@ public class EncounterManager {
 
     public void addToInitiative(CharacterTokenEntity entity, CauldronInitiativePlacement newPlacement) {
 
-        System.out.println(entity.getUuidAsString());
+        var spawnedTokenEntityIds =  new ArrayList<>(this.currentEncounter.spawnedTokenEntitiesIds.stream().toList());
+        spawnedTokenEntityIds.add(entity.getUuidAsString());
+        this.currentEncounter.spawnedTokenEntitiesIds = spawnedTokenEntityIds;
 
-        this.currentEncounter.spawnedTokenEntitiesIds.add(entity.getUuidAsString());
-        CauldronCurrentEncounter.initiative.INIT_PLACEMENTS.add(newPlacement);
+        var initPlacements =  new ArrayList<>(CauldronCurrentEncounter.initiative.INIT_PLACEMENTS.stream().toList());
+        initPlacements.add(newPlacement);
+        CauldronCurrentEncounter.initiative.INIT_PLACEMENTS = initPlacements;
+
         CauldronCurrentEncounter.updateToClients((List<ServerPlayerEntity>) world.getPlayers());
     }
 
     public void initialize() {
         encounterIsRunning = true;
 
-
-
         currentEncounter.recordedGmTokenEntities.forEach(x -> {
 
-            Entity test = this.world.getEntity(UUID.fromString(x));
-            System.out.println("From string tried: " + x);
-
-            if (test instanceof GmTokenEntity gmTokenEntity) {
+            Entity worldEntity = this.world.getEntity(UUID.fromString(x));
+            if (worldEntity instanceof GmTokenEntity gmTokenEntity) {
                 if (gmTokenEntity != null) {
                     if (gmTokenEntity.isSpawnOnInit()) {
                         gmTokenEntity.spawn();
-                        System.out.println("Spawn was able to be called here");
                     }
                 }
             }
-
-
-
         });
 
         CauldronCurrentEncounter.initiative.sortInitiative();

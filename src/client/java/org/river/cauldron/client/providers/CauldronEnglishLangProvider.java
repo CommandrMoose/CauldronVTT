@@ -17,7 +17,13 @@ public class CauldronEnglishLangProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, FabricLanguageProvider.TranslationBuilder translationBuilder) {
+
+        // Items
         registerItem(translationBuilder, CauldronBlocks.ENCOUNTER_CONTROLLER.asItem(), "Encounter Cauldron");
+        registerItem(translationBuilder, CauldronItems.GM_TOKEN_SPAWNER_ITEM, "Game Master Token");
+        registerItem(translationBuilder, CauldronItems.CHARACTER_MINI_SPAWNER_ITEM, "Player Token");
+
+
         translationBuilder.add("itemGroup.cauldron", "Cauldron");
 
     }
