@@ -22,6 +22,7 @@ import org.river.cauldron.client.screen.GmScreen;
 import org.river.cauldron.client.screen.HudRenderingEntryPoint;
 import org.river.cauldron.client.screen.SetCharacterScreen;
 import org.river.cauldron.client.screen.components.DiceWidget;
+import org.river.cauldron.network.c2s.ChangeInitIndexC2SPayload;
 import org.river.cauldron.network.s2c.OpenGmTokenScreenS2CPayload;
 import org.river.cauldron.network.s2c.OpenTokenScreenS2CPayload;
 import org.river.cauldron.network.s2c.UpdateCharacterListS2CPayload;
@@ -34,6 +35,8 @@ public class CauldronClient implements ClientModInitializer {
 
     private static KeyBinding openDiceRollerKeybinding;
     private static KeyBinding openGMScreenKeybinding;
+    private static KeyBinding leftInitativeKeybinding;
+    private static KeyBinding rightInitativeKeybinding;
     private static final KeyBinding.Category CATEGORY = KeyBinding.Category.create(Identifier.of(Cauldron.MODID, "cauldron"));
 
     @Override
@@ -75,10 +78,24 @@ public class CauldronClient implements ClientModInitializer {
                 GLFW.GLFW_KEY_B, // The keycode of the key
                 CATEGORY // The category of the key - you'll need to add a translation for this!
         ));
+
         openGMScreenKeybinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.cauldron.open_gm_screen", // The translation key of the keybinding's name
                 InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
                 GLFW.GLFW_KEY_M, // The keycode of the key
+                CATEGORY // The category of the key - you'll need to add a translation for this!
+        ));
+
+        leftInitativeKeybinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.cauldron.init_move_left", // The translation key of the keybinding's name
+                InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
+                GLFW.GLFW_KEY_LEFT, // The keycode of the key
+                CATEGORY // The category of the key - you'll need to add a translation for this!
+        ));
+        rightInitativeKeybinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.cauldron.init_move_right", // The translation key of the keybinding's name
+                InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
+                GLFW.GLFW_KEY_RIGHT, // The keycode of the key
                 CATEGORY // The category of the key - you'll need to add a translation for this!
         ));
 
@@ -96,6 +113,25 @@ public class CauldronClient implements ClientModInitializer {
             while (openGMScreenKeybinding.isPressed()) {
                 MinecraftClient.getInstance().setScreen(new GmScreen( MinecraftClient.getInstance().getWindow().getScaledWidth(), MinecraftClient.getInstance().getWindow().getScaledHeight()));
             }
+
+            if (leftInitativeKeybinding.wasPressed()) {
+
+                if (!CauldronCurrentEncounter.initiative.getHasEncounterStarted()) {
+                    return;
+                }
+
+                HudRenderingEntryPoint.navigateInitScroll(-1);
+            }
+
+            if (rightInitativeKeybinding.wasPressed()) {
+
+                if (!CauldronCurrentEncounter.initiative.getHasEncounterStarted()) {
+                    return;
+                }
+
+                HudRenderingEntryPoint.navigateInitScroll(1);
+            }
+
         });
 
         ClientPlayConnectionEvents.DISCONNECT.register((clientPlayNetworkHandler, minecraftClient) -> {

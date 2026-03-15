@@ -31,6 +31,7 @@ public class GmScreen extends Screen {
     public ButtonWidget stopInitative;
     public ButtonWidget downInit;
     public ButtonWidget upInit;
+    public ButtonWidget editInitiative;
 
 
     private static final Identifier TEXTURE = Identifier.of(Cauldron.MODID,"textures/gui/container/gm_screen.png");
@@ -71,6 +72,12 @@ public class GmScreen extends Screen {
                 this.changeInitIndex(1);
             }).position((this.width + 75) / 2, (this.height) / 2).width(50).build();
             addDrawableChild(this.upInit);
+
+
+            this.editInitiative = ButtonWidget.builder(Text.literal("Edit init"), (button) -> {
+                MinecraftClient.getInstance().setScreen(new InitiativeEditorScreen());
+            }).position(0, 0).width(150).build();
+            addDrawableChild(this.editInitiative);
         }
     }
 
